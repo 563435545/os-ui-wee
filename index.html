@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobile OS UI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 🔒 Lock Screen -->
+  <div class="lock-screen" id="lockScreen" onclick="unlockPhone()">
+    <div class="lock-time" id="lockTime">12:00</div>
+    <div class="lock-hint">แตะเพื่อปลดล็อก</div>
+  </div>
+
+  <!-- 📱 Home UI -->
+  <div class="phone-screen" id="homeScreen" hidden>
+    <div class="status-bar">
+      <span id="time">12:00</span>
+      <span>📶 🔋</span>
+    </div>
+
+    <!-- หน้าแอปแบบเลื่อนซ้ายขวา -->
+    <div class="app-pages">
+      <div class="app-page">
+        <div class="app" onclick="openApp('โทร')">📱<p>โทร</p></div>
+        <div class="app" onclick="openApp('แชท')">💬<p>แชท</p></div>
+        <div class="app" onclick="openApp('ไม่มี')">🎵<p>TikTok</p></div>
+      </div>
+      <div class="app-page">
+        <div class="app" onclick="openApp('ไม่มี')">💻<p>Discord</p></div>
+        <div class="app" onclick="openApp('ไม่มี')">▶️<p>YouTube</p></div>
+        <div class="app" onclick="openApp('กล้อง')">📷<p>กล้อง</p></div>
+      </div>
+    </div>
+
+    <div class="dock">
+      <div class="app" onclick="openApp('เน็ต')">🌐<p>เน็ต</p></div>
+      <div class="app" onclick="openApp('รูป')">🖼️<p>รูป</p></div>
+    </div>
+  </div>
+
+  <!-- 📂 App View -->
+  <div class="app-view" id="appView" hidden>
+    <div class="status-bar">
+      <span id="appTime">12:00</span>
+      <span>📶 🔋</span>
+    </div>
+    <div class="app-content">
+      <h1 id="appTitle">แอป</h1>
+      <p id="appText">เนื้อหา</p>
+      <button onclick="closeApp()">ย้อนกลับ</button>
+    </div>
+  </div>
+
+  <script>
+    // เวลา
+    function updateTime() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById("time").textContent = `${h}:${m}`;
+      document.getElementById("appTime").textContent = `${h}:${m}`;
+      document.getElementById("lockTime").textContent = `${h}:${m}`;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // ปลดล็อก
+    function unlockPhone() {
+      document.getElementById("lockScreen").hidden = true;
+      document.getElementById("homeScreen").hidden = false;
+    }
+
+    // เปิดแอป
+    function openApp(name) {
+      document.getElementById("homeScreen").hidden = true;
+      document.getElementById("appView").hidden = false;
+      document.getElementById("appTitle").textContent = name === "ไม่มี" ? "แอปนี้ยังไม่มี" : `เปิดแอป ${name}`;
+      document.getElementById("appText").textContent = name === "ไม่มี" ? "แอปนี้ยังไม่ได้สร้าง" : `คุณอยู่ในแอป "${name}"`;
+    }
+
+    // ย้อนกลับ
+    function closeApp() {
+      document.getElementById("homeScreen").hidden = false;
+      document.getElementById("appView").hidden = true;
+    }
+  </script>
+</body>
+</html>
